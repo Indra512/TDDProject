@@ -4,8 +4,8 @@ import org.testng.Assert;
 
 public class ValidationKeyword extends GenericKeyword{
 
-    public void validateTitle(String expectedTitle) {
-        Assert.assertEquals(driver.getTitle(), expectedTitle);
+    public void validateTitle(String expectedTitleKey) {
+        Assert.assertEquals(driver.getTitle(), properties.getProperty(expectedTitleKey));
     }
 
     public void validateText() {

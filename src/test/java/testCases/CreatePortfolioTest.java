@@ -17,18 +17,20 @@ public class CreatePortfolioTest extends ApplicationKeyword {
      * 6. Create Portfolio link
      * 7. Enter portfolio name
      * 8. Click on Create Portfolio link
+     * @throws InterruptedException 
      */
     @Test
-    public void createPortfolioTest() {
+    public void createPortfolioTest() throws InterruptedException {
         ApplicationKeyword app = new ApplicationKeyword();
-        app.openBrowser("chrome");
-        app.openUrl("https://money.rediff.com");
-        app.click("Sign In");
-        app.type("useremail", "sncckssbm9988@gmail.com");
-        app.type("userpass", "kssbm9988");
-        app.enterCaptcha("captcha");
-        app.clickButton("loginsubmit");
-        app.validateTitle("Rediff Moneywiz | My Portfolio(s)");
+        app.openBrowser("browser_name");
+        app.openUrl("url");
+        app.click("signIn_linkText");
+        app.type("username_id", "sncckssbm9988@gmail.com");
+        app.type("password_xpath", "kssbm9988");
+        app.enterCaptcha("captcha_css");
+        app.click("submitButton_name");
+        Thread.sleep(3000);
+        app.validateTitle("portfolio_page_title");
         app.quit();
     }
 }
