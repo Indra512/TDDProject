@@ -8,11 +8,11 @@ public class ManageStocksTest extends TestBase {
 	
 	@Test
 	public void addStock() {
-		System.out.println("Add Stock");
+		test.info("Add Stock");
 	}
 
 	@Test
 	public void modifyStock() {
-		System.out.println("Modify Stock");
+		test.info("Modify Stock");
 	}
 }

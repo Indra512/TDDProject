@@ -8,12 +8,11 @@ public class ManagePortfolioTest extends TestBase {
 	
 	@Test
 	public void createPortfolio() {
-		System.out.println("Create Portfolio");
-		app.openUrl("url");
+		test.info("Create Portfolio");
 	}
 
 	@Test
 	public void deletePortfolio() {
-		System.out.println("Delete Portfolio");
+		test.info("Delete Portfolio");
 	}
 }

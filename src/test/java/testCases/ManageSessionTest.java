@@ -8,13 +8,16 @@ public class ManageSessionTest extends TestBase {
 	
 	@Test
 	public void login() {
-		System.out.println("Login");
 		app.openBrowser("browser_name");
+		app.openUrl("url");
+		app.click("signIn_linkText");
+        app.type("username_id", "sncckssbm9988@gmail.com");
+        app.type("password_xpath", "kssbm9988");
 	}
 	
 	@Test
 	public void logout() {
-		System.out.println("Logout");
+		test.info("Logout");
 	}
 
 }

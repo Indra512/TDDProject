@@ -14,6 +14,8 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.aventstack.extentreports.ExtentTest;
+
 import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
@@ -23,9 +25,11 @@ public class GenericKeyword {
 
 	public WebDriver driver = null;
 	public Properties properties = null;
+	public ExtentTest test = null;
 
 	public void openBrowser(String browserNameKey) {
 		String browserName = properties.getProperty(browserNameKey);
+		info("Opening browser--" + browserName);
 		if (browserName.equalsIgnoreCase("chrome")) {
 			ChromeOptions chromeOptions = new ChromeOptions();
 
@@ -58,19 +62,27 @@ public class GenericKeyword {
 		driver.manage().window().maximize();
 	}
 
+	public void setExtentTest(ExtentTest test) {
+		this.test = test;
+	}
+
 	public void openUrl(String urlKey) {
+		info("Opening web url--" + properties.getProperty(urlKey));
 		driver.get(properties.getProperty(urlKey));
 	}
 
 	public void quit() {
+		info("Driver quit");
 		driver.quit();
 	}
 
 	public void click(String locatorKey) {
+		info("Perform click on locator--" + properties.getProperty(locatorKey));
 		getElement(locatorKey).click();
 	}
 
 	public void type(String locatorKey, String value) {
+		info("Typing text--" + value + " in locator--" + properties.getProperty(locatorKey));
 		getElement(locatorKey).sendKeys(value);
 	}
 
@@ -126,11 +138,11 @@ public class GenericKeyword {
 
 	public WebElement getElement(String locatorKey) {
 		if (!isElementPresent(locatorKey)) {
-			System.out.println("Locator is not present ::" + properties.getProperty(locatorKey));
+			test.info("Locator is not present--" + properties.getProperty(locatorKey));
 		}
 
 		if (!isElementVisible(locatorKey)) {
-			System.out.println("Locator is not visible ::" + properties.getProperty(locatorKey));
+			test.info("Locator is not visible--" + properties.getProperty(locatorKey));
 		}
 
 		WebElement element = driver.findElement(getLocator(locatorKey));
@@ -162,5 +174,21 @@ public class GenericKeyword {
 	public List<WebElement> getElements(String locatorKey) {
 		List<WebElement> elements = driver.findElements(getLocator(locatorKey));
 		return elements;
+	}
+	
+	public void info(String msg) {
+		test.info(msg);
+	}
+	
+	public void fail(String msg) {
+		test.fail(msg);
+	}
+	
+	public void warning(String msg) {
+		test.warning(msg);
+	}
+	
+	public void skip(String msg) {
+		test.skip(msg);
 	}
 }
