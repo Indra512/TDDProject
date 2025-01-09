@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Suite">
+	<listeners>
+		<listener class-name="listener.MyTestListener" />
+	</listeners>
 	<test name="Create Portfolio">
 		<classes>
 			<class name="testCases.ManageSessionTest">
@@ -15,7 +18,7 @@
 			</class>
 		</classes>
 	</test>
-	
+
 	<test name="Delete Portfolio">
 		<classes>
 			<class name="testCases.ManagePortfolioTest">

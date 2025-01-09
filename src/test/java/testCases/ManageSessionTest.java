@@ -17,7 +17,7 @@ public class ManageSessionTest extends TestBase {
 	
 	@Test
 	public void logout() {
-		test.info("Logout");
+		app.info("Logout");
 	}
 
 }

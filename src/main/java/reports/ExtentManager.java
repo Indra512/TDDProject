@@ -10,6 +10,7 @@ import com.aventstack.extentreports.reporter.configuration.Theme;
 public class ExtentManager {
 
 	public static ExtentReports report;
+	public static String screenshotPath;
 
 	public static ExtentReports getExtentReport() {
 		if (report == null) {
@@ -19,7 +20,7 @@ public class ExtentManager {
 			String reportFolderName = date.toString().replace(":", "_").replace(" ", "-");
 
 			String reportPath = System.getProperty("user.dir") + "/reports/" + reportFolderName;
-			String screenshotPath = reportPath + "/screenshots";
+			screenshotPath = reportPath + "/screenshots";
 
 			File file = new File(screenshotPath);
 			file.mkdirs();

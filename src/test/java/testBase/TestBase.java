@@ -1,6 +1,7 @@
 package testBase;
 
 import org.testng.ITestContext;
+import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
@@ -36,10 +37,17 @@ public class TestBase {
 		app = (ApplicationKeyword) context.getAttribute("App");
 		report = (ExtentReports) context.getAttribute("Report");
 		test = (ExtentTest) context.getAttribute("Test");
+		String criticalFailure = (String) context.getAttribute("IsCriticalFailure");
+		if (criticalFailure != null && criticalFailure.equals("true")) {
+			app.skip("Skipped because of previous test failed");
+			throw new SkipException("Skipped because of previos test failed");
+		}
 	}
 	
 	@AfterMethod(alwaysRun = true)
-	public void afterMethod() {
+	public void afterMethod(ITestContext context) {
+		app = (ApplicationKeyword) context.getAttribute("App");
+		app.reportAll();
 	}
 	
 	@AfterTest

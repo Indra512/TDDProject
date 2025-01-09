@@ -1,6 +1,9 @@
 package keywords;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,10 +16,20 @@ import org.openqa.selenium.firefox.ProfilesIni;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Reporter;
+import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 
+import reports.ExtentManager;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
@@ -26,6 +39,7 @@ public class GenericKeyword {
 	public WebDriver driver = null;
 	public Properties properties = null;
 	public ExtentTest test = null;
+	public SoftAssert softAssert = null;
 
 	public void openBrowser(String browserNameKey) {
 		String browserName = properties.getProperty(browserNameKey);
@@ -138,11 +152,11 @@ public class GenericKeyword {
 
 	public WebElement getElement(String locatorKey) {
 		if (!isElementPresent(locatorKey)) {
-			test.info("Locator is not present--" + properties.getProperty(locatorKey));
+			reportFailure("Locator is not present--" + properties.getProperty(locatorKey));
 		}
 
 		if (!isElementVisible(locatorKey)) {
-			test.info("Locator is not visible--" + properties.getProperty(locatorKey));
+			reportFailure("Locator is not visible--" + properties.getProperty(locatorKey));
 		}
 
 		WebElement element = driver.findElement(getLocator(locatorKey));
@@ -175,20 +189,56 @@ public class GenericKeyword {
 		List<WebElement> elements = driver.findElements(getLocator(locatorKey));
 		return elements;
 	}
-	
+
 	public void info(String msg) {
 		test.info(msg);
 	}
-	
+
 	public void fail(String msg) {
 		test.fail(msg);
 	}
-	
+
 	public void warning(String msg) {
 		test.warning(msg);
 	}
-	
+
 	public void skip(String msg) {
 		test.skip(msg);
+	}
+
+	public void reportFailure(String msg, boolean isCriticalFailure) {
+		fail(msg);
+		takeScreenshot();
+		softAssert.fail();
+		if (isCriticalFailure) {
+			Reporter.getCurrentTestResult().getTestContext().setAttribute("IsCriticalFailure", "true");
+			reportAll();
+		}
+	}
+
+	public void reportFailure(String msg) {
+		reportFailure(msg, false);
+	}
+
+	public void reportAll() {
+		softAssert.assertAll();
+	}
+
+	public void takeScreenshot() {
+//		file name of screenshot
+		Date date = new Date();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+		String formatedDate = simpleDateFormat.format(date);
+//		take screenshot
+		File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		try {
+			FileUtils.copyFile(srcFile, new File(ExtentManager.screenshotPath + "/" + formatedDate + ".png"));
+//			attach screenshot into Extent report
+//			test.addScreenCaptureFromPath(ExtentManager.screenshotPath+"/"+formatedDate+".png", "Screenshot");
+			test.fail(MarkupHelper.createLabel("Screenshot", ExtentColor.RED));
+			test.fail("<img src='" + ExtentManager.screenshotPath + "/" + formatedDate + ".png' style='width: 100%' />");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
