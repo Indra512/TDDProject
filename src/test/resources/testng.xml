@@ -21,6 +21,11 @@
 
 	<test name="Delete Portfolio">
 		<classes>
+			<class name="testCases.ManageSessionTest">
+				<methods>
+					<include name="login" />
+				</methods>
+			</class>
 			<class name="testCases.ManagePortfolioTest">
 				<methods>
 					<include name="deletePortfolio" />

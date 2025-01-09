@@ -2,6 +2,7 @@ package keywords;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +16,7 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.ProfilesIni;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 import org.testng.asserts.SoftAssert;
@@ -100,6 +102,11 @@ public class GenericKeyword {
 		getElement(locatorKey).sendKeys(value);
 	}
 
+	public void clear(String locatorKey) {
+		info("Clear default text from " + properties.getProperty(locatorKey));
+		getElement(locatorKey).clear();
+	}
+
 	public void enterCaptcha(String locatorKey) throws InterruptedException {
 		System.out.println("Enter Captcha to fill in the text box: ");
 		Scanner scanner = new Scanner(System.in);
@@ -108,7 +115,10 @@ public class GenericKeyword {
 		Thread.sleep(1000);
 	}
 
-	public void select() {
+	public void selectByVisibleText(String locatorKey, String value) {
+		info("Selecting value--" + value);
+		Select select = new Select(getElement(locatorKey));
+		select.selectByVisibleText(value);
 
 	}
 
@@ -121,7 +131,11 @@ public class GenericKeyword {
 	}
 
 	public void acceptAlert() {
-
+		info("Accepting the alert");
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+		wait.until(ExpectedConditions.alertIsPresent());
+		driver.switchTo().alert().accept();
+		info("Alert accepted successfully");
 	}
 
 	public void dismissAlert() {
@@ -236,8 +250,42 @@ public class GenericKeyword {
 //			attach screenshot into Extent report
 //			test.addScreenCaptureFromPath(ExtentManager.screenshotPath+"/"+formatedDate+".png", "Screenshot");
 			test.fail(MarkupHelper.createLabel("Screenshot", ExtentColor.RED));
-			test.fail("<img src='" + ExtentManager.screenshotPath + "/" + formatedDate + ".png' style='width: 100%' />");
+			test.fail(
+					"<img src='" + ExtentManager.screenshotPath + "/" + formatedDate + ".png' style='width: 100%' />");
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void waitForWebPageToLoad() {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		int i = 0;
+		while (i != 10) {
+			String state = (String) js.executeScript("return document.readyState;");
+			System.out.println(state);
+			if (state.equals("complete")) {
+				break;
+			}
+			wait(2);
+			i++;
+		}
+		i = 0;
+		while (i != 10) {
+			Long d = (Long) js.executeScript("return jQuery.active;");
+			System.out.println(d);
+			if (d.longValue() == 0) {
+				break;
+			}
+			wait(2);
+			i++;
+		}
+	}
+
+	public void wait(int seconds) {
+		try {
+			Thread.sleep(seconds * 1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

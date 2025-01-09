@@ -51,7 +51,9 @@ public class TestBase {
 	}
 	
 	@AfterTest
-	public void afterTest() {
+	public void afterTest(ITestContext context) {
+		app = (ApplicationKeyword) context.getAttribute("App");
+		report = (ExtentReports) context.getAttribute("Report");
 		if (app != null) {
 			app.quit();
 		}

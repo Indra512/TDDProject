@@ -7,12 +7,17 @@ import testBase.TestBase;
 public class ManageSessionTest extends TestBase {
 	
 	@Test
-	public void login() {
+	public void login() throws InterruptedException {
+		app.info("Login into app");
 		app.openBrowser("browser_name");
 		app.openUrl("url");
 		app.click("signIn_linkText");
         app.type("username_id", "sncckssbm9988@gmail.com");
         app.type("password_xpath", "kssbm9988");
+        app.enterCaptcha("captcha_css");
+        app.click("submitButton_name");
+        app.wait(3);
+        app.validateTitle("portfolio_page_title");
 	}
 	
 	@Test
