@@ -23,9 +23,18 @@ public class ManagePortfolioTest extends TestBase {
 		String portfolioName = "MyPortfolio_1234";
 		app.info("Deleting Portfolio--" + portfolioName);
 		app.selectByVisibleText("portfolio_dropdown_id", portfolioName);
+		app.waitForWebPageToLoad();
 		app.click("deletePortfolio_id");
 		app.acceptAlert();
 		app.waitForWebPageToLoad();
 		app.validateValueNotInPortfolioDropdpwn("portfolio_dropdown_id", portfolioName);
+	}
+	
+	@Test
+	public void selectPortfolio() {
+		String portfolioName = "My Portfolio 1234";
+		app.info("Selecting Portfolio--"+portfolioName);
+		app.selectByVisibleText("portfolio_dropdown_id", portfolioName);
+		app.waitForWebPageToLoad();
 	}
 }

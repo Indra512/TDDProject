@@ -3,6 +3,7 @@ package keywords;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -119,10 +120,18 @@ public class GenericKeyword {
 		info("Selecting value--" + value);
 		Select select = new Select(getElement(locatorKey));
 		select.selectByVisibleText(value);
-
+	}
+	
+	public void pressEnterKey(String locatorKey) {
+		info("Pressing enter key");
+		wait(1);
+		getElement(locatorKey).sendKeys(Keys.ENTER);
+		wait(2);
 	}
 
-	public void getText() {
+	public String getText(String locatorKey) {
+		info("Get text from element--"+properties.getProperty(locatorKey));
+		return getElement(locatorKey).getText();
 
 	}
 

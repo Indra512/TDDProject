@@ -16,7 +16,7 @@ public class ManageSessionTest extends TestBase {
         app.type("password_xpath", "kssbm9988");
         app.enterCaptcha("captcha_css");
         app.click("submitButton_name");
-        app.wait(3);
+        app.waitForWebPageToLoad();
         app.validateTitle("portfolio_page_title");
 	}
 	
