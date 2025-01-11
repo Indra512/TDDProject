@@ -20,8 +20,56 @@
 				<methods>
 					<include name="addStock" />
 					<include name="verifyStockIsPresent" />
-					<include name="verifyStockQuantity"/>
-					<include name="verifyStockTransactionHistory"/>
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<test name="Modify Stock : Sell Stock">
+		<parameter name="action" value="sellStock" />
+		<classes>
+			<class name="testCases.ManageSessionTest">
+				<methods>
+					<include name="login" />
+				</methods>
+			</class>
+			<class name="testCases.ManagePortfolioTest">
+				<methods>
+					<include name="selectPortfolio" />
+				</methods>
+			</class>
+			<class name="testCases.ManageStocksTest">
+				<methods>
+					<include name="verifyStockIsPresent" />
+					<include name="modifyStock" />
+					<include name="verifyStockIsPresent" />
+					<include name="verifyStockQuantity" />
+					<include name="verifyStockTransactionHistory" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<test name="Modify Stock : Buy Stock">
+		<parameter name="action" value="buyStock" />
+		<classes>
+			<class name="testCases.ManageSessionTest">
+				<methods>
+					<include name="login" />
+				</methods>
+			</class>
+			<class name="testCases.ManagePortfolioTest">
+				<methods>
+					<include name="selectPortfolio" />
+				</methods>
+			</class>
+			<class name="testCases.ManageStocksTest">
+				<methods>
+					<include name="verifyStockIsPresent" />
+					<include name="modifyStock" />
+					<include name="verifyStockIsPresent" />
+					<include name="verifyStockQuantity" />
+					<include name="verifyStockTransactionHistory" />
 				</methods>
 			</class>
 		</classes>

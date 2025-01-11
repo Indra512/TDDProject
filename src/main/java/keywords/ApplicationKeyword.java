@@ -95,6 +95,17 @@ public class ApplicationKeyword extends ValidationKeyword {
 		driver.findElement(By.cssSelector("table#stock > tbody > tr:nth-child(" + rowNum + ") input.equityTransaction"))
 				.click();
 		waitForWebPageToLoad();
-
+	}
+	
+	public void goToBuySell(String locatorKey, String stockName) {
+		int rowNum = getRowNumberWithCellData(locatorKey, stockName);
+		if (rowNum == -1) {
+			reportFailure(stockName + " is not present in the stock list", true);
+		}
+		driver.findElement(By.cssSelector("table#stock > tbody > tr:nth-child(" + rowNum + ") > td:nth-child(1)"))
+				.click();
+		driver.findElement(By.cssSelector("table#stock > tbody > tr:nth-child(" + rowNum + ") input.buySell"))
+				.click();
+		waitForWebPageToLoad();
 	}
 }

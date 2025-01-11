@@ -1,5 +1,7 @@
 package testCases;
 
+import org.testng.ITestContext;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import testBase.TestBase;
@@ -36,25 +38,65 @@ public class ManageStocksTest extends TestBase {
 		app.info(stockName + " stock is present in the stock list");
 	}
 
+	@Parameters({ "action" })
 	@Test
-	public void verifyStockQuantity() {
+	public void verifyStockQuantity(String action, ITestContext context) {
 		String stockName = "YES Bank";
-		app.info("Verifying stock quantity after add stock");
+		int modifiedQuantity = 50;
+		int expectedModifiedQuantity = 0;
+
+		app.info("Verifying stock quantity after action-- " + action);
+		int beforeBuySellQuantity = (int) context.getAttribute("BeforeBuySellQuantity");
+
 		int quantity = app.getStockQuantity("stock_table_id", stockName);
+
+		if (action.equals("sellStock"))
+			expectedModifiedQuantity = beforeBuySellQuantity - quantity;
+		else if (action.equals("buyStock"))
+			expectedModifiedQuantity = quantity - beforeBuySellQuantity;
+
+		app.info("Before stock quantity-- " + beforeBuySellQuantity);
+		app.info("After stock quantity-- " + quantity);
+
+		if (expectedModifiedQuantity != modifiedQuantity) {
+			app.reportFailure("Expected modified quantity is not matching", true);
+		}
 		app.info(stockName + " stock has " + quantity + " quantity");
 	}
 
 	@Test
 	public void verifyStockTransactionHistory() {
 		String stockName = "YES Bank";
-		app.info("Verifying stock transaction history after add stock");
+		app.info("Verifying stock transaction history after modifying stock");
 		app.openTransactionHistory("stock_table_id", stockName);
 		String quantity = app.getText("no_of_shares_on_transaction_history_css");
-		app.info("Got " + stockName + " stock and available quantity--" + quantity);
+		app.info("Latest changes in stock " + stockName + " is " + quantity);
 	}
 
+	@Parameters({"action"})
 	@Test
-	public void modifyStock() {
-		app.info("Modify Stock");
+	public void modifyStock(String action, ITestContext context) {
+		String stockName = "YES Bank";
+		String selectionDate = "10-01-2024";
+		String stockQuantity = "50";
+		String stockPrice = "150";
+
+		int quantity = app.getStockQuantity("stock_table_id", stockName);
+		app.info("Before modifying quantity--" + quantity + " of stock --" + stockName);
+		context.setAttribute("BeforeBuySellQuantity", quantity);
+
+		app.info("Buy/Sell quantity-- " + stockQuantity + " of stock-- " + stockName);
+		app.goToBuySell("stock_table_id", stockName);
+		if (action.equals("sellStock"))
+			app.selectByVisibleText("equityaction_id", "Sell");
+		else
+			app.selectByVisibleText("equityaction_id", "Buy");
+		app.click("buySellCalendar_id");
+		app.selectDateFromCalender(selectionDate);
+		app.type("buysellqty_id", stockQuantity);
+		app.type("buysellprice_id", stockPrice);
+		app.click("buySellStockButton_id");
+		app.waitForWebPageToLoad();
+		app.info("Stock modified successfully");
 	}
 }
