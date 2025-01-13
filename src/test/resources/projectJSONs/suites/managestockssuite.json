@@ -1,0 +1,64 @@
+{
+	"testCases": [
+		{
+			"name": "Add Stock",
+			"executions": [
+				{
+					"dataflag": "",
+					"methods": [
+						"login",
+						"selectPortfolio",
+						"addStock",
+						"verifyStockIsPresent"
+					]
+				}
+			]
+		},
+		{
+			"name": "Modify Stock : Sell Stock",
+			"executions": [
+				{
+					"parameternames": [
+						"action"
+					],
+					"parametervalues": [
+						"sellStock"
+					],
+					"dataflag": "",
+					"methods": [
+						"login",
+						"deletePortfolio",
+						"verifyStockIsPresent",
+						"modifyStock",
+						"verifyStockIsPresent",
+						"verifyStockQuantity",
+						"verifyStockTransactionHistory"
+					]
+				}
+			]
+		},
+		{
+			"name": "Modify Stock : Buy Stock",
+			"executions": [
+				{
+					"parameternames": [
+						"action"
+					],
+					"parametervalues": [
+						"buyStock"
+					],
+					"dataflag": "",
+					"methods": [
+						"login",
+						"deletePortfolio",
+						"verifyStockIsPresent",
+						"modifyStock",
+						"verifyStockIsPresent",
+						"verifyStockQuantity",
+						"verifyStockTransactionHistory"
+					]
+				}
+			]
+		}
+	]
+}

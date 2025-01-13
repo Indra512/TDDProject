@@ -1,0 +1,28 @@
+{
+	"testCases": [
+		{
+			"name": "Create Portfolio",
+			"executions": [
+				{
+					"dataflag":"",
+					"methods": [
+						"login",
+						"createPortfolio"
+					]
+				}
+			]
+		},
+		{
+			"name": "Delete Portfolio",
+			"executions": [
+				{
+					"dataflag": "",
+					"methods": [
+						"login",
+						"deletePortfolio"
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,25 @@
+{
+    "browsers": [
+        "chrome",
+        "fiefox"
+    ],
+    "parallelsuites": "1",
+    "testsuites": [
+        {
+            "name": "Manage Portfolio Suite",
+            "runmode": "Yes",
+            "paralleltests": "No",
+            "testdatajsonfile": "",
+            "testdataxlsfile": "",
+            "suitefilename": "suites/manageportfoliosuite.json"
+        },
+        {
+            "name": "Manage Stocks Suite",
+            "runmode": "Yes",
+            "paralleltests": "No",
+            "testdatajsonfile": "",
+            "testdataxlsfile": "",
+            "suitefilename": "suites/managestockssuite.json"
+        }
+    ]
+}
