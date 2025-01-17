@@ -44,6 +44,14 @@
 			<version>5.1.2</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
@@ -59,7 +67,8 @@
 				<version>3.5.2</version>
 				<configuration>
 					<suiteXmlFiles>
-						<suiteXmlFile>src\test\resources\ManagePortfolioSuite.xml</suiteXmlFile>
+						<suiteXmlFile>
+							src\test\resources\ManagePortfolioSuite.xml</suiteXmlFile>
 						<suiteXmlFile>src\test\resources\ManageStocksSuite.xml</suiteXmlFile>
 					</suiteXmlFiles>
 				</configuration>

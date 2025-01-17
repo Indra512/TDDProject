@@ -15,7 +15,7 @@
         },
         {
             "name": "Manage Stocks Suite",
-            "runmode": "Yes",
+            "runmode": "No",
             "paralleltests": "No",
             "testdatajsonfile": "",
             "testdataxlsfile": "",

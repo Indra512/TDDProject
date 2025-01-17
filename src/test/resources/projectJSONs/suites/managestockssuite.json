@@ -4,6 +4,12 @@
 			"name": "Add Stock",
 			"executions": [
 				{
+					"parameternames": [
+						""
+					],
+					"parametervalues": [
+						""
+					],
 					"dataflag": "",
 					"methods": [
 						"login",
@@ -27,7 +33,7 @@
 					"dataflag": "",
 					"methods": [
 						"login",
-						"deletePortfolio",
+						"selectPortfolio",
 						"verifyStockIsPresent",
 						"modifyStock",
 						"verifyStockIsPresent",
@@ -50,7 +56,7 @@
 					"dataflag": "",
 					"methods": [
 						"login",
-						"deletePortfolio",
+						"selectPortfolio",
 						"verifyStockIsPresent",
 						"modifyStock",
 						"verifyStockIsPresent",

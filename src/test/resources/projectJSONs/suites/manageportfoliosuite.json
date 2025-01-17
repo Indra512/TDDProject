@@ -4,7 +4,13 @@
 			"name": "Create Portfolio",
 			"executions": [
 				{
-					"dataflag":"",
+					"parameternames": [
+						""
+					],
+					"parametervalues": [
+						""
+					],
+					"dataflag": "",
 					"methods": [
 						"login",
 						"createPortfolio"
@@ -16,6 +22,12 @@
 			"name": "Delete Portfolio",
 			"executions": [
 				{
+					"parameternames": [
+						""
+					],
+					"parametervalues": [
+						""
+					],
 					"dataflag": "",
 					"methods": [
 						"login",
