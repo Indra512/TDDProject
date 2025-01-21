@@ -10,7 +10,7 @@
 					"parametervalues": [
 						""
 					],
-					"dataflag": "",
+					"dataflag": "createnewportfolio",
 					"methods": [
 						"login",
 						"createPortfolio"
@@ -28,7 +28,7 @@
 					"parametervalues": [
 						""
 					],
-					"dataflag": "",
+					"dataflag": "deletenewportfolio",
 					"methods": [
 						"login",
 						"deletePortfolio"

@@ -2,12 +2,14 @@ package runner;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class DataUtil {
 
@@ -31,5 +33,45 @@ public class DataUtil {
 			e.printStackTrace();
 		}
 		return classMethodMap;
+	}
+
+	public int getTestDataSets(String filePath, String dataFlag) {
+		JSONParser parser = new JSONParser();
+		try {
+			JSONObject classJSON = (JSONObject) parser.parse(new FileReader(new File(filePath)));
+			JSONArray testDataSet = (JSONArray) classJSON.get("testData");
+			for (int i = 0; i < testDataSet.size(); i++) {
+				JSONObject testData = (JSONObject) testDataSet.get(i);
+				String flag = (String) testData.get("flag");
+				if (flag.equalsIgnoreCase(dataFlag)) {
+					JSONArray data = (JSONArray) testData.get("data");
+					return data.size();
+				}
+			}
+		} catch (IOException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	public JSONObject getTestData(String filePath, String dataFlag, int iterationNumber) {
+		JSONParser parser = new JSONParser();
+		try {
+			JSONObject classJSON = (JSONObject) parser.parse(new FileReader(new File(filePath)));
+			JSONArray testDataSet = (JSONArray) classJSON.get("testData");
+			for (int i = 0; i < testDataSet.size(); i++) {
+				JSONObject testData = (JSONObject) testDataSet.get(i);
+				String flag = (String) testData.get("flag");
+				if (flag.equalsIgnoreCase(dataFlag)) {
+					JSONArray data = (JSONArray) testData.get("data");
+					return (JSONObject) data.get(iterationNumber);
+				}
+			}
+		} catch (IOException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

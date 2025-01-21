@@ -1,5 +1,6 @@
 package testCases;
 
+import org.json.simple.JSONObject;
 import org.testng.ITestContext;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -9,11 +10,12 @@ import testBase.TestBase;
 public class ManageStocksTest extends TestBase {
 
 	@Test
-	public void addStock() {
-		String stockName = "YES Bank";
-		String selectionDate = "10-01-2023";
-		String stockQuantity = "200";
-		String stockPrice = "100";
+	public void addStock(ITestContext context) {
+		JSONObject data = (JSONObject) context.getAttribute("Data");
+		String stockName = (String) data.get("stockname");
+		String selectionDate = (String) data.get("selectiondate");
+		String stockQuantity = (String) data.get("stockquantity");
+		String stockPrice = (String) data.get("stockprice");
 		app.info("Adding stock in portfolio");
 		app.click("addStock_button_id");
 		app.type("addstockname_textfield_id", stockName);
@@ -28,8 +30,9 @@ public class ManageStocksTest extends TestBase {
 	}
 
 	@Test
-	public void verifyStockIsPresent() {
-		String stockName = "YES Bank";
+	public void verifyStockIsPresent(ITestContext context) {
+		JSONObject data = (JSONObject) context.getAttribute("Data");
+		String stockName = (String) data.get("stockname");
 		app.info("Verifying stock in portfolio");
 		int rNum = app.getRowNumberWithCellData("stock_table_id", stockName);
 		if (rNum == -1) {
@@ -41,8 +44,9 @@ public class ManageStocksTest extends TestBase {
 	@Parameters({ "action" })
 	@Test
 	public void verifyStockQuantity(String action, ITestContext context) {
-		String stockName = "YES Bank";
-		int modifiedQuantity = 50;
+		JSONObject data = (JSONObject) context.getAttribute("Data");
+		String stockName = (String) data.get("stockname");
+		int modifiedQuantity = Integer.parseInt((String) data.get("stockquantity"));
 		int expectedModifiedQuantity = 0;
 
 		app.info("Verifying stock quantity after action-- " + action);
@@ -65,8 +69,9 @@ public class ManageStocksTest extends TestBase {
 	}
 
 	@Test
-	public void verifyStockTransactionHistory() {
-		String stockName = "YES Bank";
+	public void verifyStockTransactionHistory(ITestContext context) {
+		JSONObject data = (JSONObject) context.getAttribute("Data");
+		String stockName = (String) data.get("stockname");
 		app.info("Verifying stock transaction history after modifying stock");
 		app.openTransactionHistory("stock_table_id", stockName);
 		String quantity = app.getText("no_of_shares_on_transaction_history_css");
@@ -76,10 +81,11 @@ public class ManageStocksTest extends TestBase {
 	@Parameters({"action"})
 	@Test
 	public void modifyStock(String action, ITestContext context) {
-		String stockName = "YES Bank";
-		String selectionDate = "10-01-2024";
-		String stockQuantity = "50";
-		String stockPrice = "150";
+		JSONObject data = (JSONObject) context.getAttribute("Data");
+		String stockName = (String) data.get("stockname");
+		String selectionDate = (String) data.get("selectiondate");
+		String stockQuantity = (String) data.get("stockquantity");
+		String stockPrice = (String) data.get("stockprice");
 
 		int quantity = app.getStockQuantity("stock_table_id", stockName);
 		app.info("Before modifying quantity--" + quantity + " of stock --" + stockName);

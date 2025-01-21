@@ -1,0 +1,51 @@
+{
+	"testData": [
+		{
+			"flag": "addnewstock",
+			"data": [
+				{
+					"portfolioname": "My Portfolio 1234",
+					"stockname": "YES Bank",
+					"selectiondate": "10-01-2023",
+					"stockquantity": "200",
+					"stockprice": "100",
+					"runmode": "Yes"
+				},
+				{
+					"portfolioname": "My Portfolio 1234",
+					"stockname": "HDFC Bank",
+					"selectiondate": "10-07-2024",
+					"stockquantity": "400",
+					"stockprice": "1000",
+					"runmode": "Yes"
+				}
+			]
+		},
+		{
+			"flag": "sellexistingstock",
+			"data": [
+				{
+					"portfolioname": "My Portfolio 1234",
+					"stockname": "YES Bank",
+					"selectiondate": "25-12-2024",
+					"stockquantity": "50",
+					"stockprice": "150",
+					"runmode": "Yes"
+				}
+			]
+		},
+		{
+			"flag": "buyexistingstock",
+			"data": [
+				{
+					"portfolioname": "My Portfolio 1234",
+					"stockname": "HDFC Bank",
+					"selectiondate": "14-01-2025",
+					"stockquantity": "100",
+					"stockprice": "1200",
+					"runmode": "Yes"
+				}
+			]
+		}
+	]
+}

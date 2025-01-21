@@ -28,45 +28,58 @@ public class JSONRunner {
 					String suiteName = (String) testSuite.get("name");
 					String paralleltests = (String) testSuite.get("paralleltests");
 					String suiteFileName = (String) testSuite.get("suitefilename");
+					String testDataJsonFileName = (String) testSuite.get("testdatajsonfile");
 					boolean pTest = false;
 					if (paralleltests.equalsIgnoreCase("Yes")) {
 						pTest = true;
 					}
 					testNG.createSuite(suiteName, pTest);
 					testNG.addListener("listener.MyTestListener");
-					String suiteFilePath = System.getProperty("user.dir") + "/src/test/resources/projectJSONs/" + suiteFileName;
+					String suiteFilePath = System.getProperty("user.dir") + "/src/test/resources/projectJSONs/"
+							+ suiteFileName;
 					JSONParser suiteParser = new JSONParser();
 					JSONObject suiteClassJSON = (JSONObject) suiteParser.parse(new FileReader(new File(suiteFilePath)));
 					JSONArray testCases = (JSONArray) suiteClassJSON.get("testCases");
 					for (int k = 0; k < testCases.size(); k++) {
 						JSONObject testCase = (JSONObject) testCases.get(k);
 						String testName = (String) testCase.get("name");
-						testNG.addTest(testName);
 						JSONArray executions = (JSONArray) testCase.get("executions");
 						for (int l = 0; l < executions.size(); l++) {
 							JSONObject execution = (JSONObject) executions.get(l);
-							JSONArray parameterNames = (JSONArray) execution.get("parameternames");
-							JSONArray parameterValues = (JSONArray) execution.get("parametervalues");
-							if (parameterNames.size() != 0 && parameterValues.size() != 0) {
-								for (int m = 0; m < parameterNames.size(); m++) {
-									testNG.adddTestParameter(parameterNames.get(m).toString(), parameterValues.get(m).toString());
-								}
-							}
+							String testDataFilePath = System.getProperty("user.dir")
+									+ "/src/test/resources/projectJSONs/" + testDataJsonFileName;
 							String dataFlag = (String) execution.get("dataflag");
-							JSONArray methods = (JSONArray) execution.get("methods");
-							List<String> includeMethods = new ArrayList<String>();
-							for (int n = 0; n < methods.size(); n++) {
-								String method = (String) methods.get(n);
-								String currentClassName = classMethodMap.get(method);
-								if (n == methods.size() - 1
-										|| !currentClassName.equals(classMethodMap.get(methods.get(n + 1)))) {
-									includeMethods.add(method);
-									testNG.addTestClass(currentClassName, includeMethods);
-									includeMethods = new ArrayList<String>();
-								} else {
-									includeMethods.add(method);
-								}
+							int testDataSets = new DataUtil().getTestDataSets(testDataFilePath, dataFlag);
+							for (int x = 0; x < testDataSets; x++) {
+								testNG.addTest(testName + " Method " + (x + 1));
+								JSONArray parameterNames = (JSONArray) execution.get("parameternames");
+								JSONArray parameterValues = (JSONArray) execution.get("parametervalues");
 
+								if (parameterNames.size() != 0 && parameterValues.size() != 0) {
+									for (int m = 0; m < parameterNames.size(); m++) {
+										testNG.adddTestParameter(parameterNames.get(m).toString(),
+												parameterValues.get(m).toString());
+									}
+								}
+								testNG.adddTestParameter("testDataFilePath", testDataFilePath);
+								testNG.adddTestParameter("dataFlag", dataFlag);
+								testNG.adddTestParameter("iterationNumber", String.valueOf(x));
+
+								JSONArray methods = (JSONArray) execution.get("methods");
+								List<String> includeMethods = new ArrayList<String>();
+								for (int n = 0; n < methods.size(); n++) {
+									String method = (String) methods.get(n);
+									String currentClassName = classMethodMap.get(method);
+									if (n == methods.size() - 1
+											|| !currentClassName.equals(classMethodMap.get(methods.get(n + 1)))) {
+										includeMethods.add(method);
+										testNG.addTestClass(currentClassName, includeMethods);
+										includeMethods = new ArrayList<String>();
+									} else {
+										includeMethods.add(method);
+									}
+
+								}
 							}
 						}
 					}
@@ -76,6 +89,5 @@ public class JSONRunner {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 }

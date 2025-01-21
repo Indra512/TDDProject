@@ -7,17 +7,17 @@
     "testsuites": [
         {
             "name": "Manage Portfolio Suite",
-            "runmode": "Yes",
+            "runmode": "No",
             "paralleltests": "No",
-            "testdatajsonfile": "",
+            "testdatajsonfile": "testJSONData/portfolioData.json",
             "testdataxlsfile": "",
             "suitefilename": "suites/manageportfoliosuite.json"
         },
         {
             "name": "Manage Stocks Suite",
-            "runmode": "No",
+            "runmode": "Yes",
             "paralleltests": "No",
-            "testdatajsonfile": "",
+            "testdatajsonfile": "testJSONData/stocksData.json",
             "testdataxlsfile": "",
             "suitefilename": "suites/managestockssuite.json"
         }

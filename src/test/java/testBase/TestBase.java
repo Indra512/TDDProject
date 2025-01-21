@@ -1,5 +1,6 @@
 package testBase;
 
+import org.json.simple.JSONObject;
 import org.testng.ITestContext;
 import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
@@ -12,6 +13,7 @@ import com.aventstack.extentreports.ExtentTest;
 
 import keywords.ApplicationKeyword;
 import reports.ExtentManager;
+import runner.DataUtil;
 
 
 public class TestBase {
@@ -23,13 +25,23 @@ public class TestBase {
 	public void beforeTest(ITestContext context) {
 		// single object for single test
 		// initialize and share for all test cases
+		String testDataFilePath = context.getCurrentXmlTest().getParameter("testDataFilePath");
+		String dataFlag = context.getCurrentXmlTest().getParameter("dataFlag");
+		int iterationNumber = Integer.parseInt(context.getCurrentXmlTest().getParameter("iterationNumber"));
+		JSONObject data = new DataUtil().getTestData(testDataFilePath, dataFlag, iterationNumber);
 		app = new ApplicationKeyword();
 		report = ExtentManager.getExtentReport();
 		test = report.createTest(context.getCurrentXmlTest().getName());
 		context.setAttribute("App", app);
 		context.setAttribute("Report", report);
 		context.setAttribute("Test", test);
+		context.setAttribute("Data", data);
 		app.setExtentTest(test);
+		String runMode = (String) data.get("runmode");
+		if (!runMode.equalsIgnoreCase("Yes")) {
+			app.skip("Run mode in test data is not true");
+			throw new SkipException("Run mode in test data is not true");
+		}
 	}
 	
 	@BeforeMethod(alwaysRun = true)

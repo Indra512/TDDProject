@@ -10,7 +10,7 @@
 					"parametervalues": [
 						""
 					],
-					"dataflag": "",
+					"dataflag": "addnewstock",
 					"methods": [
 						"login",
 						"selectPortfolio",
@@ -30,7 +30,7 @@
 					"parametervalues": [
 						"sellStock"
 					],
-					"dataflag": "",
+					"dataflag": "sellexistingstock",
 					"methods": [
 						"login",
 						"selectPortfolio",
@@ -53,7 +53,7 @@
 					"parametervalues": [
 						"buyStock"
 					],
-					"dataflag": "",
+					"dataflag": "buyexistingstock",
 					"methods": [
 						"login",
 						"selectPortfolio",

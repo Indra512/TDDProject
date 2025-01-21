@@ -1,0 +1,38 @@
+{
+	"testData": [
+		{
+			"flag": "createnewportfolio",
+			"data": [
+				{
+					"portfolioname": "MyPortfolio_1",
+					"runmode": "Yes"
+				},
+				{
+					"portfolioname": "MyPortfolio_2",
+					"runmode": "Yes"
+				},
+				{
+					"portfolioname": "MyPortfolio_3",
+					"runmode": "Yes"
+				}
+			]
+		},
+		{
+			"flag": "deletenewportfolio",
+			"data": [
+				{
+					"portfolioname": "MyPortfolio_1",
+					"runmode": "Yes"
+				},
+				{
+					"portfolioname": "MyPortfolio_2",
+					"runmode": "Yes"
+				},
+				{
+					"portfolioname": "MyPortfolio_3",
+					"runmode": "Yes"
+				}
+			]
+		}
+	]
+}
