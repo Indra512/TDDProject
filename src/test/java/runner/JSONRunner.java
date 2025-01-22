@@ -29,6 +29,7 @@ public class JSONRunner {
 					String paralleltests = (String) testSuite.get("paralleltests");
 					String suiteFileName = (String) testSuite.get("suitefilename");
 					String testDataJsonFileName = (String) testSuite.get("testdatajsonfile");
+					String testDataExcelFileName = (String) testSuite.get("testdataxlsxfile");
 					boolean pTest = false;
 					if (paralleltests.equalsIgnoreCase("Yes")) {
 						pTest = true;
@@ -46,10 +47,16 @@ public class JSONRunner {
 						JSONArray executions = (JSONArray) testCase.get("executions");
 						for (int l = 0; l < executions.size(); l++) {
 							JSONObject execution = (JSONObject) executions.get(l);
-							String testDataFilePath = System.getProperty("user.dir")
-									+ "/src/test/resources/projectJSONs/" + testDataJsonFileName;
 							String dataFlag = (String) execution.get("dataflag");
-							int testDataSets = new DataUtil().getTestDataSets(testDataFilePath, dataFlag);
+							
+//							For JSON Data
+//							String testDataFilePath = System.getProperty("user.dir") + "/src/test/resources/projectJSONs/" + testDataJsonFileName;
+//							int testDataSets = new DataUtil().getTestDataSets(testDataFilePath, dataFlag);
+							
+//							For Excel Data
+							String testDataFilePath = System.getProperty("user.dir") + "/src/test/resources/projectJSONs/"+ testDataExcelFileName;
+							int testDataSets = new ExcelReader().getTestDataSets(testDataFilePath, suiteName, dataFlag);
+							
 							for (int x = 0; x < testDataSets; x++) {
 								testNG.addTest(testName + " Method " + (x + 1));
 								JSONArray parameterNames = (JSONArray) execution.get("parameternames");
@@ -61,9 +68,16 @@ public class JSONRunner {
 												parameterValues.get(m).toString());
 									}
 								}
+//								For JSON Data
+//								testNG.adddTestParameter("testDataFilePath", testDataFilePath);
+//								testNG.adddTestParameter("dataFlag", dataFlag);
+//								testNG.adddTestParameter("iterationNumber", String.valueOf(x));
+								
+//								For Excel Data
 								testNG.adddTestParameter("testDataFilePath", testDataFilePath);
 								testNG.adddTestParameter("dataFlag", dataFlag);
 								testNG.adddTestParameter("iterationNumber", String.valueOf(x));
+								testNG.adddTestParameter("sheetName", suiteName);
 
 								JSONArray methods = (JSONArray) execution.get("methods");
 								List<String> includeMethods = new ArrayList<String>();
