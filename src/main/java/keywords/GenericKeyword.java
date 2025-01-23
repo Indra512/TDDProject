@@ -152,7 +152,7 @@ public class GenericKeyword {
 	}
 
 	public boolean isElementPresent(String locatorKey) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		try {
 			wait.until(ExpectedConditions.presenceOfElementLocated(getLocator(locatorKey)));
 		} catch (Exception e) {
@@ -163,7 +163,7 @@ public class GenericKeyword {
 	}
 
 	public boolean isElementVisible(String locatorKey) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		try {
 			wait.until(ExpectedConditions.visibilityOfElementLocated(getLocator(locatorKey)));
 		} catch (Exception e) {

@@ -12,8 +12,9 @@ public class ManageSessionTest extends TestBase {
 		app.openBrowser("browser_name");
 		app.openUrl("url");
 		app.click("signIn_linkText");
-        app.type("username_id", "sncckssbm9988@gmail.com");
-        app.type("password_xpath", "kssbm9988");
+        app.type("username_id", "ADD_YOUR_CREDENTAILS");
+        app.type("password_xpath", "ADD_YOUR_CREDENTAILS");
+//        Enter captcha manually
 //        app.enterCaptcha("captcha_css");
         app.wait(10);
         app.click("submitButton_name");

@@ -13,7 +13,7 @@ import com.aventstack.extentreports.ExtentTest;
 
 import keywords.ApplicationKeyword;
 import reports.ExtentManager;
-import runner.DataUtil;
+import runner.JsonUtil;
 import runner.ExcelReader;
 
 
@@ -23,22 +23,19 @@ public class TestBase {
 	public ExtentTest test;
 	
 	@BeforeTest
-	public void beforeTest(ITestContext context) {
-		// single object for single test
-		// initialize and share for all test cases
-		
-		//Read JSON
-//		String testDataFilePath = context.getCurrentXmlTest().getParameter("testDataFilePath");
-//		String dataFlag = context.getCurrentXmlTest().getParameter("dataFlag");
-//		int iterationNumber = Integer.parseInt(context.getCurrentXmlTest().getParameter("iterationNumber"));
-//		JSONObject data = new DataUtil().getTestData(testDataFilePath, dataFlag, iterationNumber);
-		
-		// Read Excel
+	public void beforeTest(ITestContext context) {	
+//		Read JSON
 		String testDataFilePath = context.getCurrentXmlTest().getParameter("testDataFilePath");
-		String sheetName = context.getCurrentXmlTest().getParameter("sheetName");
 		String dataFlag = context.getCurrentXmlTest().getParameter("dataFlag");
 		int iterationNumber = Integer.parseInt(context.getCurrentXmlTest().getParameter("iterationNumber"));
-		JSONObject data = new ExcelReader().getTestData(testDataFilePath, sheetName, dataFlag, iterationNumber);
+		JSONObject data = new JsonUtil().getTestData(testDataFilePath, dataFlag, iterationNumber);
+		
+//		Read Excel
+//		String testDataFilePath = context.getCurrentXmlTest().getParameter("testDataFilePath");
+//		String sheetName = context.getCurrentXmlTest().getParameter("sheetName");
+//		String dataFlag = context.getCurrentXmlTest().getParameter("dataFlag");
+//		int iterationNumber = Integer.parseInt(context.getCurrentXmlTest().getParameter("iterationNumber"));
+//		JSONObject data = new ExcelReader().getTestData(testDataFilePath, sheetName, dataFlag, iterationNumber);
 		
 		app = new ApplicationKeyword();
 		report = ExtentManager.getExtentReport();

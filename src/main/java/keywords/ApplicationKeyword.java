@@ -24,10 +24,6 @@ public class ApplicationKeyword extends ValidationKeyword {
 		softAssert = new SoftAssert();
 	}
 
-	public void login() {
-
-	}
-
 	public void selectDateFromCalender(String date) {
 		info("Selecting date--" + date);
 		try {

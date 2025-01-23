@@ -11,10 +11,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class DataUtil {
+public class JsonUtil {
 
 	public Map<String, String> loadClassMethods() {
-		String filePath = System.getProperty("user.dir") + "/src/test/resources/projectJSONs/classmethods.json";
+		String filePath = System.getProperty("user.dir") + "/src/test/resources/testData/classmethods.json";
 		Map<String, String> classMethodMap = new HashMap<String, String>();
 		JSONParser parser = new JSONParser();
 		try {

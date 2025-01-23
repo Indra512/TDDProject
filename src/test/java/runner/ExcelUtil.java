@@ -19,20 +19,8 @@ public class ExcelUtil {
 			fis = new FileInputStream(filePath);
 			workbook = new XSSFWorkbook(fis);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	public int getRowCount(String sheetName){
-		sheet = workbook.getSheet(sheetName);
-		return sheet.getLastRowNum()+1;
-	}
-	
-	public int getColumnCount(String sheetName){
-		sheet = workbook.getSheet(sheetName);
-		XSSFRow row = sheet.getRow(0);
-		return row.getLastCellNum();
 	}
 	
 	public String getCellData(String sheetName, int colNumber, int rowNumber) {

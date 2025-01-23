@@ -92,7 +92,7 @@
 
 	<build>
 		<plugins>
-			<plugin>
+			<!--<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.13.0</version>
@@ -107,6 +107,24 @@
 							src\test\resources\ManagePortfolioSuite.xml</suiteXmlFile>
 						<suiteXmlFile>src\test\resources\ManageStocksSuite.xml</suiteXmlFile>
 					</suiteXmlFiles>
+				</configuration>
+			</plugin>-->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>3.5.0</version>
+				<executions>
+					<execution>
+						<id>Data Driven Framework</id>
+						<phase>test</phase>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>runner.Runner</mainClass>
+					<classpathScope>test</classpathScope>
 				</configuration>
 			</plugin>
 		</plugins>
